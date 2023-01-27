@@ -1,3 +1,4 @@
+import { Route } from "react-router-dom";
 // common
 import "./App.css";
 import Header from "./components/common/Header";
@@ -11,7 +12,8 @@ import Community from "./components/sub/Community";
 import Gallery from "./components/sub/Gallery";
 import Youtube from "./components/sub/Youtube";
 import Join from "./components/sub/Join";
-import { Route } from "react-router-dom";
+import Location from "./components/sub/Location";
+
 
 function App() {
   return (
