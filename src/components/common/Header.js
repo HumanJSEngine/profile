@@ -1,6 +1,11 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import "../../scss/style.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+
+//node modules 폴더
+// FontAwesome 적용
 /*
  a 태그 href를 이용하면 페이지갱신
  Link 컴포넌트를 이용하면 컴포넌트 갱신(SPA)
@@ -10,14 +15,13 @@ import "../../scss/style.scss";
  : 객체를 이용해서 포커스 스타일 적용
  :activeStyle="CSS객체" 이라는 props에 적용
  : to="URI" props는 필수
-
 */
 
-const Header = () => {
+const Header = (props) => {
   const active = {color:'skyblue'};
 
   return (
-    <header>
+    <header className={props.type}>
       <div className="inner">
         <h1>
           <Link to="/">Logo</Link>
@@ -42,6 +46,7 @@ const Header = () => {
             <NavLink activeStyle={active} to="/join">Join</NavLink>
           </li>
         </ul>
+        <FontAwesomeIcon icon={faBars} className="fa-bars"/>
       </div>
     </header>
   );

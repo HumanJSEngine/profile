@@ -17,7 +17,7 @@ import Location from "./components/sub/Location";
 function App() {
   return (
     <>
-
+{/* 동일한 컴포넌트가 출력될때 조건에 따라 하나만 출력된다 */}
       <Switch>
         <Route exact path="/">
           {/* router 값에 따라서 header props로 type="main" 전달 */}
