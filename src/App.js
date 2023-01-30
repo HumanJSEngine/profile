@@ -1,4 +1,4 @@
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 // common
 import "./App.css";
 import Header from "./components/common/Header";
@@ -14,19 +14,22 @@ import Youtube from "./components/sub/Youtube";
 import Join from "./components/sub/Join";
 import Location from "./components/sub/Location";
 
-
 function App() {
   return (
     <>
-      <Header />
-      {/* 화면별 Link에 출력될 단위 
-      Route: 화면별 Link에 의해 출력될 단위
-      path : 연결할 주소 
-      exact : 정확하게 path 가 같을 때만 */}
-      <Route exact path="/">
-        <Visual />
-        <Content />
-      </Route>
+
+      <Switch>
+        <Route exact path="/">
+          {/* router 값에 따라서 header props로 type="main" 전달 */}
+          <Header type={"main"} />
+          <Visual />
+          <Content />
+        </Route>
+        {/* 컴포넌트를 출력하는 3번째 방법 */}
+        {/* <Header type={'sub'}/>  props를 내리기 위해서 */}
+        <Route path="/" render={() => <Header type={"sub"} />} />
+      </Switch>
+
       {/* 화면별 Link에 출력될 단위 
       Route : 화면별 Link에 의해 출력될 단위
       path : 연결할 주소
@@ -36,13 +39,18 @@ function App() {
         <Department />
       </Route> */}
 
-      {/*2번 방식 : 인라인 방식의 Route 적용 */}
+      {/* 라우터에 따라서 header의 css를 달리하겠다 */}
+      {/* 중첩되는 Header에 대한 처리가 필요하다 */}
+
       <Route path="/department" component={Department} />
       <Route path="/community" component={Community} />
       <Route path="/gallery" component={Gallery} />
       <Route path="/youtube" component={Youtube} />
       <Route path="/location" component={Location} />
       <Route path="/join" component={Join} />
+      <Route>
+        
+      </Route>
       <Footer />
     </>
   );
