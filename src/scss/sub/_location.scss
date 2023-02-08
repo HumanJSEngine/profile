@@ -1,10 +1,33 @@
-.Location{
-  figure{
-    background: sandybrown;
-  }
+.Location {
+    figure {
+        background: sandybrown;
+    }
 
-  #map{
-    width:100%;
-    height:400px;
-  }
+    #map {
+        width: 100%;
+        height: 400px;
+    }
+
+    .btnSet {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        ul {
+            display: flex;
+            li {
+                cursor: pointer;
+                border: 1px solid #999;
+                height: 30px;
+                padding: 5px 20px;
+                font-size: 14px;
+                color: #555;
+                transition: 0.5s;
+                &:on {
+                    background-color: #555;
+                    color: #fff;
+                    border: 1px solid #555;
+                }
+            }
+        }
+    }
 }

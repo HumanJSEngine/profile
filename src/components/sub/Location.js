@@ -1,53 +1,117 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Layout from "../common/Layout";
 
-
-//카카오 지도 API를 React 적용
-// 1.개발자 등록
-// 지도 코드 작성
-// 위도 경도 파악
-//
 const Location = () => {
-  const path = process.env.PUBLIC_URL;
-  const { kakao } = window;
-  const container = useRef(null);
+    const path = process.env.PUBLIC_URL;
+    const { kakao } = window;
 
-  console.log(kakao);
-  const options = {
-    //지도를 생성할 때 필요한 기본 옵션
-    center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-    level: 3, //지도의 레벨(확대, 축소 정도)
-  };
+    const infoArr = [
+        {
+            title: "대구 GREEN1",
+            latLng: new kakao.maps.LatLng(33.450701, 126.570667),
+            imgSrc: `${path}/images/starbucks.png`,
+            imgSize: new kakao.maps.Size(64, 69),
+            imgPos: { offset: new kakao.maps.Point(116, 99) },
+        },
+        {
+            title: "대구 GREEN2",
+            latLng: new kakao.maps.LatLng(55.450701, 100.570667),
+            imgSrc: `${path}/images/starbucks.png`,
+            imgSize: new kakao.maps.Size(64, 69),
+            imgPos: { offset: new kakao.maps.Point(116, 99) },
+        },
+        {
+            title: "대구 GREEN3",
+            latLng: new kakao.maps.LatLng(33.450701, 126.570667),
+            imgSrc: `${path}/images/starbucks.png`,
+            imgSize: new kakao.maps.Size(64, 69),
+            imgPos: { offset: new kakao.maps.Point(116, 99) },
+        },
+    ];
 
-  useEffect(() => {
-    const map = new kakao.maps.Map(container.current, options);
+    const [info, setInfo] = useState(infoArr);
 
-    const markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+    const [pos, setPos] = useState(null);
 
-    const imageSrc = `${path}/images/starbucks.png`, // 마커이미지의 주소입니다
-      imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
-      imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+    const [idx, setIdx] = useState(0);
 
-    // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-    const markerImage = new kakao.maps.MarkerImage(
-      imageSrc,
-      imageSize,
-      imageOption
+    const container = useRef(null);
+
+    const btns = useRef(null);
+
+    const options = {
+        center: info[idx].latLng,
+        level: 3,
+    };
+
+    console.log(infoArr);
+    useEffect(() => {
+        // 중첩되는 지도 html 태그 제거
+        container.current.innerHtml = "";
+        const map = new kakao.maps.Map(container.current, options);
+        const markerPosition = info[idx].latLng;
+        const imageSrc = info[idx].imgSrc;
+        const imageSize = info[idx].imgSize;
+        const imageOption = info[idx].imgPos;
+        const markerImage = new kakao.maps.MarkerImage(
+            imageSrc,
+            imageSize,
+            imageOption
+        );
+
+        // 마커를 생성합니다
+        const marker = new kakao.maps.Marker({
+            position: markerPosition,
+            image: markerImage, // 마커이미지 설정
+        });
+
+        marker.setMap(map);
+        setPos(map);
+
+        for (let i of btns.current.children) {
+            i.classList.add("on");
+        }
+
+        btns.current.children[idx].classList.add("on");
+
+        const mapCenter = () => {
+            map.setCenter(info[idx].latLng);
+        };
+
+        window.addEventListener("resize", mapCenter);
+
+        //스카이뷰 전환버튼 추가
+        //스카이뷰 전환버튼 추가
+        const mapTypeControl = new kakao.maps.MapTypeControl();
+        map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPLEFT);
+
+        // 확대 축소버튼 추가
+        const zoomControl = new kakao.maps.ZoomControl();
+        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+        map.addOverlayMapTypeId(kakao.maps.MapTypeId.ROADVIEW);
+
+        return () => {
+            window.removeEventListener("resize", mapCenter);
+        };
+    }, [idx]);
+
+    return (
+        <Layout title={"Location"}>
+            <div id="map" ref={container}></div>
+
+            <div className="btnSet">
+                <ul ref={btns}>
+                    {info.map((item, idx) => {
+                        return (
+                            <li key={idx} onClick={() => setIdx(idx)}>
+                                {item.title}
+                            </li>
+                        );
+                    })}
+                </ul>
+            </div>
+        </Layout>
     );
-    // 마커를 생성합니다
-    const marker = new kakao.maps.Marker({
-      position: markerPosition,
-      image: markerImage, // 마커이미지 설정
-    });
-
-    marker.setMap(map);
-  }, []);
-
-  return (
-    <Layout title={"Location"}>
-      <div id="map" ref={container}></div>
-    </Layout>
-  );
 };
 
 export default Location;

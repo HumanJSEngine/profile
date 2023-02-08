@@ -8,10 +8,8 @@ import App from "./App";
 // root.render(<App />);
 
 ReactDOM.render(
-  //1. App 컴포넌트를 BrowserRouter 로 감싸ㅣ서
-  //App 안에서 라우터 기능을 활용하도록 함
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-  document.getElementById("root")
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>,
+    document.getElementById("root")
 );
