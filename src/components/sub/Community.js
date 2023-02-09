@@ -1,18 +1,49 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Layout from "../common/Layout";
 
 const Community = () => {
-  useEffect(() => {
-    //하고 싶은일
-    //클린업 함수 : 컴포넌트 제거시 실행
-    console.log("mount : 컴포넌트 생성");
-    // axios, html 요소 선택하는 작업....
-    return () => {
-      console.log("unmount : 컴포넌트 제거");
-    };
-  }, []);
+    useEffect(() => {
+        return () => {
+            console.log("unmount : 컴포넌트 제거");
+        };
+    }, []);
+    const input = useRef(null);
+    const contents = useRef(null);
 
-  return <Layout title={"Community"}>Community</Layout>;
+    const createPost = (e) => {};
+
+    const resetPost = (e) => {};
+
+    return (
+        <Layout title={"Community"}>
+            Community
+            <div className="inputBox">
+                <form>
+                    <input
+                        type="text"
+                        placeholder="제목을 입력하세요"
+                        ref={input}
+                    />
+                    <br />
+                    <textarea
+                        cols="30"
+                        rows="5"
+                        placeholder="분류를 입력하세요"
+                        ref={contents}
+                    ></textarea>
+                    <div className="btnSet">
+                        {/*form 안쪽에 버튼을 type을 정의한다 */}
+                        <button type="button" onClick={resetPost}>
+                            CANCEL
+                        </button>
+                        <button type="button" onClick={createPost}>
+                            WRITE
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </Layout>
+    );
 };
 
 export default Community;

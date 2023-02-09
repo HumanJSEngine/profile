@@ -1,5 +1,34 @@
 .Community {
-  figure{
-    background: rgb(240, 132, 186);
-  }
+    figure {
+        background: rgb(240, 132, 186);
+    }
+    > .inner {
+        .inputBox {
+            border: 1px solid #bbb;
+            padding: 50px;
+            margin-bottom: 50px;
+            input[type="text"],
+            textarea {
+                width: 50%;
+                padding: 8px 10px;
+                border: 1px solid #aaa;
+                margin-bottom: 20px;
+                resize: none;
+            }
+            .btnSet {
+                button {
+                    width: 150px;
+                    height: 30px;
+                    display: inline-flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: none;
+                    background: #555;
+                    color: #fff;
+                    cursor: pointer;
+                    margin-right: 20px;
+                }
+            }
+        }
+    }
 }
