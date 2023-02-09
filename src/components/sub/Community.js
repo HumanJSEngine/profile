@@ -1,22 +1,49 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Layout from "../common/Layout";
 
 const Community = () => {
-    useEffect(() => {
-        return () => {
-            console.log("unmount : 컴포넌트 제거");
-        };
-    }, []);
+    const initPost = [
+        { title: "Hello 1", content: "Welcome Fp, React" },
+        { title: "Hello 2", content: "Welcome Fp, React" },
+        { title: "Hello 3", content: "Welcome Fp, React" },
+        { title: "Hello 4", content: "Welcome Fp, React" },
+        { title: "Hello 5", content: "Welcome Fp, React" },
+    ];
+
+    // 출력 목록 관리 state
+    const [posts, setPosts] = useState(initPost);
     const input = useRef(null);
     const contents = useRef(null);
 
-    const createPost = (e) => {};
+    const createPost = () => {
+        if (
+            input.current.value.trim() === "" ||
+            contents.current.value.trim() === ""
+        ) {
+            resetPost();
+            alert("제목과 본문을 입력하세요");
+        }
+        // 새로운 포스트 등록
+        // state 업데이트라서 화면 갱신
+        setPosts([
+            ...posts,
+            { title: input.current.value, content: contents.current.value },
+        ]);
 
-    const resetPost = (e) => {};
+        resetPost();
+    };
+
+    const resetPost = () => {
+        input.current.value = "";
+        contents.current.value = "";
+    };
+
+    useEffect(() => {
+        console.log(posts);
+    }, [posts]);
 
     return (
         <Layout title={"Community"}>
-            Community
             <div className="inputBox">
                 <form>
                     <input
@@ -41,6 +68,18 @@ const Community = () => {
                         </button>
                     </div>
                 </form>
+            </div>
+            <div className="showBox">
+                {posts.map((item, idx) => (
+                    <article key={item.index}>
+                        <h2>{item.title}</h2>
+                        <p>{item.content}</p>
+                        <div className="btnSet">
+                            <button>EDIT</button>
+                            <button>DELETE</button>
+                        </div>
+                    </article>
+                ))}
             </div>
         </Layout>
     );

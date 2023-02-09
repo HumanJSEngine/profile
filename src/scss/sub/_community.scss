@@ -30,5 +30,37 @@
                 }
             }
         }
+        .showBox {
+            border: 1px solid #bbb;
+            padding: 50px;
+            article {
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 40px;
+                padding: 30px;
+                background: #fff;
+                .txt {
+                    width: 70%;
+                }
+                .btnSet {
+                    display: flex;
+                    align-items: center;
+                    width: 25%;
+                    button {
+                        width: 50%;
+                        height: 30px;
+                        border: none;
+                        background: #555;
+                        color: #fff;
+                        cursor: pointer;
+                        margin-right: 10px;
+                        transition: 0.3s;
+                        &:hover {
+                            background: #111;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
