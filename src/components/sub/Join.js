@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../common/Layout";
 const Join = () => {
-    // 회원 가입을 위한 정보를 한개의 객체로 관리
-    // 정보 관리 초기객체
     let initVal = {
         userid: "",
         email: "",
@@ -10,39 +8,41 @@ const Join = () => {
         password2: "",
         gender: "",
         interests: "",
+        edu: "",
     };
     const [val, setVal] = useState(initVal);
 
-    // form 에 입력된 name 과 value 를 이용해서 state 를 업데이트 하겠다.
-    // 매번 onChange 가 별도 작성이 아닌 한 곳에서 관리하겠다.
-    // state 업데이트를 한곳에서 관리하겠다.
     const handleChange = (e) => {
-        // console.log(e.target); // tag = {name:"userid", value:"123"}
-        // console.log(e.target.name); // tag name="userid"
-        // console.log(e.target.value);// tag value
         const { name, value } = e.target;
         setVal({ ...val, [name]: value });
     };
 
-    // 성별 라디오 이벤트 핸들러
     const handleRadio = (e) => {
-        // id 를 받아서 처리할까? 고민중
         const { name, id } = e.target;
-        // const isCheck = e.target.checked;
         setVal({ ...val, [name]: id });
     };
 
-    // 관심사 체크박스 이벤트 핸들러
     const handleCheck = (e) => {
-        // 사용자가 항목을 변경했는지 파악
         let isCheck = false;
         const { name } = e.target;
-        // 다중으로 선택하여서 처리하는 법
         const inputs = e.target.parentElement.querySelectorAll("input");
-        inputs.forEach((item) => {
+        let data = {};
+        for (let item of inputs) {
+            let { id, checked } = item;
+            data[id] = checked;
             if (item.checked) isCheck = true;
+        }
+        setVal((prev) => {
+            const obj = { ...prev };
+            obj.hobby = data;
+            return obj;
         });
-        setVal({ ...val, [name]: isCheck });
+
+        setVal((prev) => {
+            const obj = { ...prev };
+            obj[name] = isCheck;
+            return obj;
+        });
     };
 
     // 에러 정보 관리 객체
@@ -82,8 +82,9 @@ const Join = () => {
         if (!_val.interests) {
             errs.interests = "관심사를 하나이상 선택해주세요.";
         }
+        // 학력체크
         if (_val.edu === "") {
-            errs.edu = "학력을 선택해 주세요.";
+            errs.edu = "학력을 선택해주세요.";
         }
         return errs;
     };
@@ -92,24 +93,15 @@ const Join = () => {
     useEffect(() => {
         console.log(val);
     }, [val]);
-
     useEffect(() => {
         console.log(Err);
     }, [Err]);
 
-    // 전송 실행시 각 항목의 내용 체크
     const handleSubmit = (e) => {
-        // 웹브라우저가 갱신된다.
-        // SPA 컨셉과 맞지 않는다.
-        // state 도 초기화가 된다.
         e.preventDefault();
-        console.log(e);
-        // 필요항목에 대한 체크 실행
-        // 각 항목 체크용 객체를 생성해 진행
         setErr(check(val));
     };
 
-    // 에러 및 유효성 검사 결과 한개의 객체로 관리
     return (
         <Layout title={"Join"}>
             <form onSubmit={handleSubmit}>
@@ -240,6 +232,7 @@ const Join = () => {
                                     <span className="err">{Err.interests}</span>
                                 </td>
                             </tr>
+                            {/* 교육경력 */}
                             <tr>
                                 <th>EDUCATION</th>
                                 <td>
@@ -248,17 +241,19 @@ const Join = () => {
                                         id="edu"
                                         onChange={handleChange}
                                     >
-                                        <option value="step1">
+                                        <option value="">
                                             학력을 선택하세요.
                                         </option>
-                                        <option value="stpe2">초등학교</option>
-                                        <option value="step3">
+                                        <option value="step-1">
+                                            초등학교 졸업
+                                        </option>
+                                        <option value="step-2">
                                             중학교 졸업
                                         </option>
-                                        <option value="step4">
-                                            고등학교 졸업{" "}
+                                        <option value="step-3">
+                                            고등학교 졸업
                                         </option>
-                                        <option value="step5">
+                                        <option value="step-4">
                                             대학교 졸업
                                         </option>
                                     </select>
@@ -268,7 +263,6 @@ const Join = () => {
                             {/* 폼 전송 */}
                             <tr>
                                 <th colSpan="2">
-                                    {/* <button type="button">전송</button> */}
                                     <input type="reset" value="RESET" />
                                     <input type="submit" value="SUBMIT" />
                                 </th>
