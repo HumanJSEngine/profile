@@ -1,6 +1,7 @@
 import { text } from '@fortawesome/fontawesome-svg-core';
 import React, { useState, useRef, useEffect } from 'react';
 import Layout from '../common/Layout';
+import Communitycard from './Communitycard';
 
 const Community = () => {
     const initPost = [
@@ -148,51 +149,17 @@ const Community = () => {
             </div>
             <div className='showBox'>
                 {posts.map((item, idx) => (
-                    <article key={idx}>
-                        {item.enableUpdate ? (
-                            <>
-                                <div className='txt'>
-                                    <input
-                                        type='text'
-                                        defaultValue={item.title}
-                                        placeholder='제목을 입력하세요'
-                                        ref={inputEdit}
-                                    />
-                                    <br />
-                                    <textarea
-                                        cols='30'
-                                        row='5'
-                                        defaultValue={item.content}
-                                        placeholder='내용을 입력'
-                                        ref={textareaEdit}
-                                    ></textarea>
-                                </div>
-                                <div className='btnSet'>
-                                    <button onClick={() => disableUpdate(idx)}>
-                                        CANCEL
-                                    </button>
-                                    <button onClick={() => updatePost(idx)}>
-                                        SAVE
-                                    </button>
-                                </div>
-                            </>
-                        ) : (
-                            <>
-                                <div className='txt'>
-                                    <h2>{item.title}</h2>
-                                    <p>{item.content}</p>
-                                </div>
-                                <div className='btnSet'>
-                                    <button onClick={() => enableUpdate(idx)}>
-                                        EDIT
-                                    </button>
-                                    <button onClick={() => deletePost(idx)}>
-                                        DELETE
-                                    </button>
-                                </div>
-                            </>
-                        )}
-                    </article>
+                    <Communitycard
+                        key={idx}
+                        item={item}
+                        inputEdit={inputEdit}
+                        textareaEdit={textareaEdit}
+                        disableUpdate={disableUpdate}
+                        enableUpdate={enableUpdate}
+                        deletePost={deletePost}
+                        updatePost={updatePost}
+                        index={idx}
+                    ></Communitycard>
                 ))}
             </div>
         </Layout>
