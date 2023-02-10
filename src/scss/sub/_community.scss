@@ -7,7 +7,7 @@
             border: 1px solid #bbb;
             padding: 50px;
             margin-bottom: 50px;
-            input[type="text"],
+            input[type='text'],
             textarea {
                 width: 50%;
                 padding: 8px 10px;
@@ -41,6 +41,14 @@
                 background: #fff;
                 .txt {
                     width: 70%;
+                    input,
+                    textarea {
+                        width: 70%;
+                        border: 1px solid #bbb;
+                        padding: 8px 12px;
+                        margin-bottom: 10px;
+                        resize: none;
+                    }
                 }
                 .btnSet {
                     display: flex;
