@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Layout from '../common/Layout';
 import Communitycard from './Communitycard';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import axios from 'axios';
 
 // 02. form 요소의 항목별 에러체크
 const schema = yup.object({
@@ -47,6 +48,7 @@ const Community = () => {
     // 출력 목록 관리 state
     const [posts, setPosts] = useState(getLocalPost());
     const [Allowed, setAllowed] = useState(true);
+    const [imgFile, setImgFile] = useState('');
 
     const createPost = (data) => {
         setPosts([...posts, data]);
@@ -127,6 +129,40 @@ const Community = () => {
         localStorage.setItem('post', JSON.stringify(posts));
     }, [posts]);
 
+    //이미지 업로드 및 미리보기
+    const imgRef = useRef(null);
+    const onChangeImg = async (e) => {
+        e.preventDefault();
+        if (e.target.files) {
+            //files는 배열에 담긴다
+            //file이 1개 이므로 e.target.files[0]
+            const uploadFile = e.target.files[0];
+            console.log(uploadFile);
+            // 이미지를 읽어들이는 바닐라 함수
+            const reader = new FileReader();
+            reader.readAsDataURL(uploadFile);
+            reader.onloadend = () => {
+                // 임시 이미지가 만들어진다. useState
+                setImgFile(reader.result);
+            };
+
+            // 서버로 이미지를 임시로 보내고 URL 글자를 받아오는 코드
+            // 파일을 강제로 업로드 한다
+
+            const formData = new FormData();
+            formData.append('files', uploadFile);
+            await axios({
+                method: 'post',
+                url: '/api/files/images',
+                data: formData,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            // ./images/aaa.gif
+        }
+    };
+
     return (
         <Layout title={'Community'}>
             <div className='inputBox'>
@@ -150,6 +186,15 @@ const Community = () => {
                     <input type='date' {...register('timestamp')} />
                     <span className='err'>{errors.timestamp?.message}</span>
                     <br />
+                    <div>
+                        <img src={imgFile} alt='프로필 이미지' />
+                        <input
+                            type='file'
+                            accept='image/*'
+                            onInput={onChangeImg}
+                            ref={imgRef}
+                        ></input>
+                    </div>
                     <div className='btnSet'>
                         {/*form 안쪽에 버튼을 type을 정의한다 */}
                         <button type='reset'>CANCEL</button>
