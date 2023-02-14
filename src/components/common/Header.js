@@ -34,6 +34,9 @@ const Header = (props) => {
             <NavLink activeStyle={active} to="/community">Community</NavLink>
           </li>
           <li>
+            <NavLink activeStyle={active} to="/schedule">Schedule</NavLink>
+          </li>
+          <li>
             <NavLink activeStyle={active} to="/gallery">Gallery</NavLink>
           </li>
           <li>

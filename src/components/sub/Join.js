@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from "react";
-import DaumPostcodeEmbed from "react-daum-postcode";
+import React, { useEffect, useState } from 'react';
+import DaumPostcodeEmbed from 'react-daum-postcode';
 
-import Layout from "../common/Layout";
+import Layout from '../common/Layout';
+
 const Join = () => {
     let initVal = {
-        userid: "",
-        email: "",
-        phone: "",
-        password: "",
-        password2: "",
-        address: "",
-        address2: "",
-        gender: "",
-        birthday: "",
-        interests: "",
-        edu: "",
+        userid: '',
+        email: '',
+        phone: '',
+        password: '',
+        password2: '',
+        address: '',
+        address2: '',
+        gender: '',
+        birthday: '',
+        interests: '',
+        edu: '',
         hobby: null,
-        comment: "",
+        comment: '',
     };
     const [val, setVal] = useState(initVal);
 
@@ -33,7 +34,7 @@ const Join = () => {
     const handleCheck = (e) => {
         let isCheck = false;
         const { name } = e.target;
-        const inputs = e.target.parentElement.querySelectorAll("input");
+        const inputs = e.target.parentElement.querySelectorAll('input');
         let data = {};
         for (let item of inputs) {
             let { id, checked } = item;
@@ -57,19 +58,19 @@ const Join = () => {
 
     const handleComplete = (data) => {
         let fullAddress = data.address;
-        let extraAddress = "";
+        let extraAddress = '';
 
-        if (data.addressType === "R") {
-            if (data.bname !== "") {
+        if (data.addressType === 'R') {
+            if (data.bname !== '') {
                 extraAddress += data.bname;
             }
-            if (data.buildingName !== "") {
+            if (data.buildingName !== '') {
                 extraAddress +=
-                    extraAddress !== ""
+                    extraAddress !== ''
                         ? `, ${data.buildingName}`
                         : data.buildingName;
             }
-            fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+            fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
         }
         setVal({ ...val, address: fullAddress });
         setPostVisible(false);
@@ -81,14 +82,14 @@ const Join = () => {
         const errs = {};
         // 아이디 체크
         if (_val.userid.length < 5) {
-            errs.userid = "아이디를 5글자 이상 입력해주세요.";
+            errs.userid = '아이디를 5글자 이상 입력해주세요.';
         }
         // 이메일 체크/이메일 정규표현식 이용한 처리
         if (_val.email.length < 8 || !/@/.test(_val.email)) {
-            errs.email = "이메일은 최소 8글자 이상 @을 포함해 주세요.";
+            errs.email = '이메일은 최소 8글자 이상 @을 포함해 주세요.';
         }
-        if (_val.phone === "") {
-            errs.phone = "전화번호를 입력하세요";
+        if (_val.phone === '') {
+            errs.phone = '전화번호를 입력하세요';
         }
 
         // 비밀번호
@@ -102,37 +103,37 @@ const Join = () => {
             !spc.test(_val.password)
         ) {
             errs.password =
-                "비밀번호는 5글자 이상, 영문, 숫자, 특수문자를 모두 포함해 주세요.";
+                '비밀번호는 5글자 이상, 영문, 숫자, 특수문자를 모두 포함해 주세요.';
         }
         // 비밀번호2 체크
         if (_val.password !== _val.password2 || !_val.password2) {
-            errs.password2 = "비밀번호를 동일하게 입력해주세요.";
+            errs.password2 = '비밀번호를 동일하게 입력해주세요.';
         }
         // 성별 체크
-        if (_val.gender === "") {
-            errs.gender = "성별을 선택하세요.";
+        if (_val.gender === '') {
+            errs.gender = '성별을 선택하세요.';
         }
         // 관심사 체크
         if (!_val.interests) {
-            errs.interests = "관심사를 하나이상 선택해주세요.";
+            errs.interests = '관심사를 하나이상 선택해주세요.';
         }
         // 학력체크
-        if (_val.edu === "") {
-            errs.edu = "학력을 선택해주세요.";
+        if (_val.edu === '') {
+            errs.edu = '학력을 선택해주세요.';
         }
         if (_val.comment.length < 20) {
-            errs.comment = "남기는 말을 20글자 이상 입력";
+            errs.comment = '남기는 말을 20글자 이상 입력';
         }
         //주소 체크
-        if (_val.address === "") {
-            errs.address = "주소를 입력해주세요";
+        if (_val.address === '') {
+            errs.address = '주소를 입력해주세요';
         }
-        if (_val.address === "") {
-            errs.address2 = "상세주소를 입력";
+        if (_val.address === '') {
+            errs.address2 = '상세주소를 입력';
         }
         //생년월일 체크
-        if (_val.birthday === "") {
-            errs.birthday = "생년월일을 입력";
+        if (_val.birthday === '') {
+            errs.birthday = '생년월일을 입력';
         }
 
         return errs;
@@ -159,7 +160,7 @@ const Join = () => {
         const { name } = e.target;
         let value = e.target.value;
         value = value
-            .replace(/[^0-9]/g, "") // 숫자를 제외한 모든 문자 제거
+            .replace(/[^0-9]/g, '') // 숫자를 제외한 모든 문자 제거
             .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
 
         setVal({ ...val, [name]: value });
@@ -168,12 +169,12 @@ const Join = () => {
     const handleBirthday = (e) => {
         const { name } = e.target;
         let value = e.target.value;
-        value = value.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+        value = value.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
         setVal({ ...val, [name]: value });
     };
 
     return (
-        <Layout title={"Join"}>
+        <Layout title={'Join'}>
             <form onSubmit={handleSubmit}>
                 <fieldset>
                     <legend>회원 가입</legend>
@@ -183,51 +184,51 @@ const Join = () => {
                             {/* 아이디 입력 */}
                             <tr>
                                 <th>
-                                    <label htmlFor="userid">USER ID</label>
+                                    <label htmlFor='userid'>USER ID</label>
                                 </th>
                                 <td>
                                     <input
-                                        type="text"
-                                        id="userid"
-                                        name="userid"
-                                        placeholder="아이디를 입력하세요."
+                                        type='text'
+                                        id='userid'
+                                        name='userid'
+                                        placeholder='아이디를 입력하세요.'
                                         onChange={handleChange}
                                     />
-                                    <span className="err">{Err.userid}</span>
+                                    <span className='err'>{Err.userid}</span>
                                 </td>
                             </tr>
                             {/* 이메일 */}
                             <tr>
                                 <th>
-                                    <label htmlFor="email">E-MAIL</label>
+                                    <label htmlFor='email'>E-MAIL</label>
                                 </th>
                                 <td>
                                     <input
-                                        type="text"
-                                        id="email"
-                                        name="email"
-                                        placeholder="이메일 주소를 입력해주세요."
+                                        type='text'
+                                        id='email'
+                                        name='email'
+                                        placeholder='이메일 주소를 입력해주세요.'
                                         onChange={handleChange}
                                     />
-                                    <span className="err">{Err.email}</span>
+                                    <span className='err'>{Err.email}</span>
                                 </td>
                             </tr>
                             {/* 전화번호 */}
                             <tr>
                                 <th>
-                                    <label htmlFor="phone">PHONE</label>
+                                    <label htmlFor='phone'>PHONE</label>
                                 </th>
                                 <td>
                                     <input
-                                        type="text"
-                                        id="phone"
-                                        name="phone"
-                                        placeholder="전화번호를 입력"
+                                        type='text'
+                                        id='phone'
+                                        name='phone'
+                                        placeholder='전화번호를 입력'
                                         maxLength={13}
                                         onChange={handlePhone}
                                         value={val.phone}
                                     />
-                                    <span className="err">{Err.phone}</span>
+                                    <span className='err'>{Err.phone}</span>
                                 </td>
                             </tr>
                             {/* 비밀번호 */}
@@ -237,40 +238,40 @@ const Join = () => {
                                 </th>
                                 <td>
                                     <input
-                                        type="password"
-                                        id="password"
-                                        name="password"
-                                        placeholder="비밀번호를 입력하세요"
+                                        type='password'
+                                        id='password'
+                                        name='password'
+                                        placeholder='비밀번호를 입력하세요'
                                         onChange={handleChange}
                                     />
-                                    <span className="err">{Err.password}</span>
+                                    <span className='err'>{Err.password}</span>
                                 </td>
                             </tr>
                             {/* 비밀번호2 */}
                             <tr>
                                 <th>
-                                    <label htmlFor="address">Address</label>
+                                    <label htmlFor='address'>Address</label>
                                 </th>
                                 <td>
                                     <input
-                                        type="text"
-                                        name="address"
-                                        id="address"
-                                        placeholder="주소를 입력"
+                                        type='text'
+                                        name='address'
+                                        id='address'
+                                        placeholder='주소를 입력'
                                         onChange={handleChange}
                                         readOnly
                                         onClick={() =>
                                             setPostVisible(!postVisible)
                                         }
-                                        style={{ cursor: "pointer" }}
+                                        style={{ cursor: 'pointer' }}
                                         value={val.address}
                                     />
-                                    <span className="err">{Err.address}</span>
+                                    <span className='err'>{Err.address}</span>
                                     {postVisible && (
                                         <div
                                             style={{
-                                                position: "absolute",
-                                                background: "#FFF",
+                                                position: 'absolute',
+                                                background: '#FFF',
                                             }}
                                         >
                                             <button
@@ -291,10 +292,10 @@ const Join = () => {
                                     )}
                                     <br />
                                     <input
-                                        type="text"
-                                        id="address2"
-                                        name="address2"
-                                        placeholder="상세주소를 입력하세요"
+                                        type='text'
+                                        id='address2'
+                                        name='address2'
+                                        placeholder='상세주소를 입력하세요'
                                         onChange={handleChange}
                                     />
                                 </td>
@@ -302,91 +303,91 @@ const Join = () => {
                             {/* 생년월일 */}
                             <tr>
                                 <th>
-                                    <label htmlFor="birthday">BIRTHDAY</label>
+                                    <label htmlFor='birthday'>BIRTHDAY</label>
                                 </th>
                                 <td>
                                     <input
-                                        type="date"
-                                        id="birthday"
-                                        name="birthday"
-                                        placeholder="생년월일을 입력해 주세요"
+                                        type='date'
+                                        id='birthday'
+                                        name='birthday'
+                                        placeholder='생년월일을 입력해 주세요'
                                         onChange={handleBirthday}
                                         maxLength={13}
                                     />
-                                    <span className="err">{Err.birthday}</span>
+                                    <span className='err'>{Err.birthday}</span>
                                 </td>
                             </tr>
                             <tr>
                                 <th>
-                                    <label htmlFor="password2">
+                                    <label htmlFor='password2'>
                                         PASSWORD 확인
                                     </label>
                                 </th>
                                 <td>
                                     <input
-                                        type="password"
-                                        id="password2"
-                                        name="password2"
-                                        placeholder="비밀번호를 입력하세요"
+                                        type='password'
+                                        id='password2'
+                                        name='password2'
+                                        placeholder='비밀번호를 입력하세요'
                                         onChange={handleChange}
                                     />
-                                    <span className="err">{Err.password2}</span>
+                                    <span className='err'>{Err.password2}</span>
                                 </td>
                             </tr>
                             {/* 성별체크 */}
                             <tr>
                                 <th>GENDER</th>
                                 <td>
-                                    <label htmlFor="male">Male</label>
+                                    <label htmlFor='male'>Male</label>
                                     <input
-                                        type="radio"
-                                        id="male"
-                                        name="gender"
+                                        type='radio'
+                                        id='male'
+                                        name='gender'
                                         onChange={handleRadio}
                                     />
-                                    <label htmlFor="female">Female</label>
+                                    <label htmlFor='female'>Female</label>
                                     <input
-                                        type="radio"
-                                        id="female"
-                                        name="gender"
+                                        type='radio'
+                                        id='female'
+                                        name='gender'
                                         onChange={handleRadio}
                                     />
-                                    <span className="err">{Err.gender}</span>
+                                    <span className='err'>{Err.gender}</span>
                                 </td>
                             </tr>
                             {/* 관심사 */}
                             <tr>
                                 <th>INTERESTS</th>
                                 <td>
-                                    <label htmlFor="sports">Sports</label>
+                                    <label htmlFor='sports'>Sports</label>
                                     <input
-                                        type="checkbox"
-                                        id="sports"
-                                        name="interests"
+                                        type='checkbox'
+                                        id='sports'
+                                        name='interests'
                                         onChange={handleCheck}
                                     />
-                                    <label htmlFor="music">Music</label>
+                                    <label htmlFor='music'>Music</label>
                                     <input
-                                        type="checkbox"
-                                        id="music"
-                                        name="interests"
+                                        type='checkbox'
+                                        id='music'
+                                        name='interests'
                                         onChange={handleCheck}
                                     />
-                                    <label htmlFor="game">Game</label>
+                                    <label htmlFor='game'>Game</label>
                                     <input
-                                        type="checkbox"
-                                        id="game"
-                                        name="interests"
+                                        type='checkbox'
+                                        id='game'
+                                        name='interests'
                                         onChange={handleCheck}
                                     />
-                                    <label htmlFor="etc">Etc</label>
+                                    <label htmlFor='etc'>Etc</label>
                                     <input
-                                        type="checkbox"
-                                        id="etc"
-                                        name="interests"
+                                        type='checkbox'
+                                        id='etc'
+                                        name='interests'
                                         onChange={handleCheck}
                                     />
-                                    <span className="err">{Err.interests}</span>
+                                    <span className='err'>{Err.interests}</span>
                                 </td>
                             </tr>
                             {/* 교육경력 */}
@@ -394,54 +395,54 @@ const Join = () => {
                                 <th>EDUCATION</th>
                                 <td>
                                     <select
-                                        name="edu"
-                                        id="edu"
+                                        name='edu'
+                                        id='edu'
                                         onChange={handleChange}
                                     >
-                                        <option value="">
+                                        <option value=''>
                                             학력을 선택하세요.
                                         </option>
-                                        <option value="step-1">
+                                        <option value='step-1'>
                                             초등학교 졸업
                                         </option>
-                                        <option value="step-2">
+                                        <option value='step-2'>
                                             중학교 졸업
                                         </option>
-                                        <option value="step-3">
+                                        <option value='step-3'>
                                             고등학교 졸업
                                         </option>
-                                        <option value="step-4">
+                                        <option value='step-4'>
                                             대학교 졸업
                                         </option>
                                     </select>
-                                    <span className="err">{Err.edu}</span>
+                                    <span className='err'>{Err.edu}</span>
                                 </td>
                             </tr>
                             <tr>
                                 <th>
-                                    <label htmlFor="comment">COMMENT</label>
+                                    <label htmlFor='comment'>COMMENT</label>
                                 </th>
                                 <td>
                                     <textarea
-                                        name="comment"
-                                        id="comment"
-                                        cols="30"
-                                        row="5"
-                                        placeholder="남기는 말을 입력"
+                                        name='comment'
+                                        id='comment'
+                                        cols='30'
+                                        row='5'
+                                        placeholder='남기는 말을 입력'
                                         onChange={handleChange}
                                     ></textarea>
-                                    <span className="err">{Err.comment}</span>
+                                    <span className='err'>{Err.comment}</span>
                                 </td>
                             </tr>
                             {/* 폼 전송 */}
                             <tr>
-                                <th colSpan="2">
+                                <th colSpan='2'>
                                     <input
-                                        type="reset"
+                                        type='reset'
                                         onClick={handleReset}
-                                        value="RESET"
+                                        value='RESET'
                                     />
-                                    <input type="submit" value="SUBMIT" />
+                                    <input type='submit' value='SUBMIT' />
                                 </th>
                             </tr>
                         </tbody>
