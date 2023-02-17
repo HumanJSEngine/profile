@@ -14,8 +14,21 @@ import Youtube from './components/sub/Youtube';
 import Join from './components/sub/Join';
 import Location from './components/sub/Location';
 import Schedule from './components/sub/Schedule';
+import Login from './components/sub/Login';
+import Logout from './components/sub/Logout';
 
 function App() {
+    const jsKey = process.env.REACT_APP_KAKAO;
+
+    // SDK는 한 번만 초기화해야 한다.
+    // 중복되는 초기화를 막기 위해 isInitialized()로 SDK 초기화 여부를 판단한다.
+    if (!window.Kakao.isInitialized()) {
+        // JavaScript key를 인자로 주고 SDK 초기화
+        window.Kakao.init(jsKey);
+        // SDK 초기화 여부를 확인하자.
+        console.log(window.Kakao.isInitialized());
+    }
+
     return (
         <>
             {/* 동일한 컴포넌트가 출력될때 조건에 따라 하나만 출력된다 */}
@@ -49,6 +62,8 @@ function App() {
             <Route path='/youtube' component={Youtube} />
             <Route path='/location' component={Location} />
             <Route path='/join' component={Join} />
+            <Route path='/login' component={Login} />
+            <Route path='/logout' component={Logout} />
             <Footer />
         </>
     );

@@ -66,10 +66,6 @@ const Schedule = () => {
                 // 달력에 출력될 html 작성
                 tileContent={({ date, view }) => {
                     let html = [];
-                    // date         : Mon Feb 28 2022 00:00:00 GMT+0900 (한국 표준시)
-                    // item.date    : "2023-02-07"
-                    // 각각의 날짜 영역에 출력하고 싶은 내용을 작성한다.
-                    // 날짜를 비교해서 같으면 출력을 하겠다.
                     if (
                         todoData.find((item, index) => {
                             // 현재 date 는 포맷이 다릅니다.
@@ -92,7 +88,6 @@ const Schedule = () => {
                     return <div>{html}</div>;
                 }}
             />
-            {/* 상세 정보 내역 출력 */}
             <div className='calender-detail'>
                 {todoData && (
                     <div className='calender-detail__item'>
@@ -101,7 +96,11 @@ const Schedule = () => {
                                 src={`${publicFolder}/images/starbucks.png`}
                                 alt='스타벅스'
                                 className='calender-detail__icon'
-                                style={{ width: 20, height: 20 }}
+                                style={{
+                                    width: 20,
+                                    height: 20,
+                                    objectFit: 'cover',
+                                }}
                             />
                             방문한날
                         </div>
